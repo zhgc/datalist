@@ -2,6 +2,9 @@ from dataclasses import dataclass
 from functools import reduce
 
 class List():
+    def __init__(self):
+        # 想到个事，既然List当且仅当通过Empty和Cons实例化，那么List这个类本身应该给它堵住才对。
+        raise TypeError("Cannot instantiate this class directly, only inherit.")
     def __str__(self) -> str:
         s:str = "["
         match self:
@@ -55,7 +58,7 @@ def take(n,list) -> List:
     match (n,list):
         case (0,xs)         :return Empty()
         case (_,Empty())    :return Empty()
-        case (n_,Cons(x,xs)):return Cons(x,take(n_-1,xs)) 
+        case (n,Cons(x,xs)) :return Cons(x,take(n-1,xs)) 
 
 def bo(xs:List,ys:List) -> List:
     match (xs,ys):
