@@ -13,7 +13,7 @@ class List():
         match (self,value):
             case (Empty(),Empty())                 : return True
             case (Cons(x,xs),Cons(y,ys)) if x == y : return xs.__eq__(ys)
-            case (_,_)                             : return False
+            case _                                 : return False
     def __iter__(self):
         self.next = self
         return self
@@ -29,7 +29,7 @@ class Empty(List):
     pass
 @dataclass
 class Cons(List):
-    head:int # 其实如果升级到3.12可以加入泛型，不过python的事没必要纠结太多。
+    head:int # 其实如果升级到3.12可以加入泛型，不过python的事感觉没必要纠结太多,类型标注根本挡不住任何人。
     tail:List
 
 def newlist(*args) -> List:
@@ -47,9 +47,8 @@ def foldl(f,e,xs:List):
 
 def zipWith(f,xs:List,ys:List) -> List:
     match (xs,ys):
-        case (Empty(),Empty())      : return Empty()
-        case (_,Empty())            : return Empty()
         case (Empty(),_)            : return Empty()
+        case (_,Empty())            : return Empty()
         case (Cons(x,xs),Cons(y,ys)): return Cons(f(x,y),zipWith(f,xs,ys))
 
 def take(n,list) -> List:
@@ -60,10 +59,9 @@ def take(n,list) -> List:
 
 def bo(xs:List,ys:List) -> List:
     match (xs,ys):
-        case (Empty(),Empty())   : return Empty()
         case (Empty(),ys)        : return ys
         case (xs,Empty())        : return xs
-        case (Cons(x,Empty()),ys): return Cons(x,ys)
+        case (Cons(x,Empty()),ys): return Cons(x,ys) # 这一条可以省略
         case (Cons(x,xs),ys)     : return Cons(x,bo(xs,ys))
 
 def concat(xss:List) -> List:
@@ -75,42 +73,15 @@ def reverse(xs:List) -> List:
     return foldl(lambda xs,x:Cons(x,xs),Empty(),xs)
 
 def map(f,xs:List) -> List:
-    return foldr((lambda x,xs: Cons(f(x),xs)),Empty(),xs)
+    return foldr(lambda x,xs: Cons(f(x),xs),Empty(),xs)
 
 def filter(f,xs:List) -> List:
     return foldr(lambda x,xs: Cons(x,xs) if f(x) else xs,Empty(),xs)
 
-
-
-
-        
+# 还应该写一个从List还原到list的函数。
+# 然后把partition和qsort挪过来。
+# 应该对照着再看看Prelude和Data.List里还有啥内容。试着丢进来。
+# 还没有尝试过，python能做到类似惰性求值的效果吗？以后试试看。
 
 if __name__ == "__main__" :
-    l:List = Cons(1,Cons(2,Cons(3,Empty())))
-    l2:List = newlist(4,5,6)
-    l3:List = Empty()
-
-    match l:
-        case Empty()            : print("nothing")
-        case Cons(x,Cons(y,xs)) : print(x,y)
-        case Cons(x,xs)         : print("head is",x)
-
-    match l2:
-        case Empty()            : print("l2 is nothing")
-        case Cons(x,Cons(y,xs)) : print(x,y)
-        case Cons(x,xs)         : print("l2 head is",x)
-
-    print(take(2,l2))
-    print(newlist(1,2,3) == newlist(1,2,3))
-    print(newlist(1,2,"3",4))
-    ll = newlist(newlist(1,2,3),newlist(4,5,6))
-    print(ll)
-    print(bo(l,l2))
-    l4 = concat(ll)
-    print("l4 is ",l4)
-    print("reverse l4 is",reverse(l4))
-    it = iter(l4)
-    print(next(it))
-    print(foldr((lambda x,y:x+y),0,l))
-    print(map(lambda x:x*x,l4))
-    print("l4 filter",filter(lambda x: x % 2 == 0,l4))
+    pass

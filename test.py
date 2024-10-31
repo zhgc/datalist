@@ -50,19 +50,19 @@ print("map list1 plus 1:",map(lambda x:x+1,list1))
 print("filter list5 by ((/= ) ... (%2)):",filter(lambda x:x%2 == 0,list5))
 
 # 算法测试
-
+# 生成一个随机列表。
 listrandom : List = newlist(*[random.randint(0,99) for _ in range(100)]) # 注意要转成我们的List
 print("show random list",listrandom)
-
-def partition(f,xs):
+# 根据f将List分成两部分
+def partition(f,xs:List) -> tuple[List,List]:
     def g(x,xss):
         xs,ys = xss
         return (Cons(x,xs),ys) if f(x) else (xs,Cons(x,ys))
     return foldr(g,(Empty(),Empty()),xs)
-
 # partition f xs = foldr (\x,(as,bs) -> if f x then (Cons(x,as),bs) else (as,Cons(x,bs)) ) ([],[]) xs
 
-def qsort(xs):
+# 快速排序
+def qsort(xs:List) -> List:
     match xs:
         case Empty()    : return Empty()
         case Cons(x,xs) :
