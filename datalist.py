@@ -3,10 +3,11 @@ from functools import reduce
 
 class List():
     def __str__(self) -> str:
-        s:str = "("
+        s:str = "["
         match self:
-            case Empty()    : s += "[])"
-            case Cons(x,xs) : s = s + "{}:".format(x) + xs.__str__()[1:]
+            case Empty()         : s = s + "]"
+            case Cons(x,Empty()) : s = s + "{}".format(x) + "]"
+            case Cons(x,xs)      : s = s + "{},".format(x) + xs.__str__()[1:]
         return s
     def __eq__(self, value: object) -> bool:
         match (self,value):
@@ -44,12 +45,12 @@ def foldl(f,e,xs:List):
         case (_,e,Empty())    : return e
         case (f,e,Cons(x,xs)) : return foldl(f,f(e,x),xs)
 
-def zip(f,xs:List,ys:List) -> List:
+def zipWith(f,xs:List,ys:List) -> List:
     match (xs,ys):
         case (Empty(),Empty())      : return Empty()
         case (_,Empty())            : return Empty()
         case (Empty(),_)            : return Empty()
-        case (Cons(x,xs),Cons(y,ys)): return Cons(f(x),zip(xs,ys))
+        case (Cons(x,xs),Cons(y,ys)): return Cons(f(x,y),zipWith(f,xs,ys))
 
 def take(n,list) -> List:
     match (n,list):
