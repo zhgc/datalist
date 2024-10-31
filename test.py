@@ -47,7 +47,7 @@ print("add list1 and list2:",bo(list1,list2))
 print("map list1 plus 1:",map(lambda x:x+1,list1))
 
 # filter
-print("filter list5 by ((/= ) ... (%2)):",filter(lambda x:x%2 == 0,list5))
+print("filter list5):",filter(lambda x:x%2 == 0,list5))
 
 # 算法测试
 # 生成一个随机列表。
