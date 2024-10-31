@@ -70,3 +70,4 @@ def qsort(xs):
             return bo(qsort(left),Cons(x,qsort(right)))
         
 print("sort listrandom :",qsort(listrandom))
+
