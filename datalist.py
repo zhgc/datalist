@@ -54,7 +54,7 @@ def zipWith(f,xs:List,ys:List) -> List:
         case (_,Empty())            : return Empty()
         case (Cons(x,xs),Cons(y,ys)): return Cons(f(x,y),zipWith(f,xs,ys))
 
-def take(n,list) -> List:
+def take(n:int,list) -> List:
     match (n,list):
         case (0,xs)         :return Empty()
         case (_,Empty())    :return Empty()
