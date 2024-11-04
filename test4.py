@@ -23,5 +23,7 @@ def nums(n):
 # numbers 一个无穷无尽的自然数序列。
 numbers = nums(0)
 
-print(take(3,numbers) == tt)
-print(tt.tail.tail.__class__)
+print(take(10,numbers))
+
+# print(take(3,numbers) == tt)
+# print(tt.tail.tail.__class__)
