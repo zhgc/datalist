@@ -47,7 +47,7 @@ print("add list1 and list2:",bo(list1,list2))
 print("map list1 plus 1:",map(lambda x:x+1,list1))
 
 # filter
-print("filter list5):",filter(lambda x:x%2 == 0,list5))
+print("filter list5:",filter(lambda x:x%2 == 0,list5))
 
 # 算法测试
 # 生成一个随机列表。
@@ -55,7 +55,7 @@ listrandom : List = newlist(*[random.randint(0,99) for _ in range(100)]) # 注�
 print("show random list",listrandom)
 # 根据f将List分成两部分
 def partition(f,xs:List) -> tuple[List,List]:
-    def g(x,xss):
+    def g(x,xss:tuple[List,List]):
         xs,ys = xss
         return (Cons(x,xs),ys) if f(x) else (xs,Cons(x,ys))
     return foldr(g,(Empty(),Empty()),xs)
