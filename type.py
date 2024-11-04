@@ -8,20 +8,14 @@ class List(Generic[T]):
         # 想到个事，既然List当且仅当通过Empty和Cons实例化，那么List这个类本身应该给它堵住才对。
         raise TypeError("Cannot instantiate this class directly, only inherit.")
     def __str__(self) -> str:
-
-        # runthunk(self)
-        match self:
-            case Thunk(xs):
-                self = xs()
-            case Cons(x,Thunk(xs)):
-                self.tail = xs()
-        # print函数会避免修改对象，因此runthunk会遇到麻烦，折中的处理是把match直接写在这里。
-        # 但是，print的计算结果并不会保留下来。
+        runthunk(self)
+        # runthunk(self) # runthunk两次解决问题。不过怎么解决的我暂时蒙在鼓里。
         s:str = "["
         match self:
             case Empty()          : s = s + "]"
             case Cons(x,Empty())  : s = s + "{}".format(x) + "]"
             case Cons(x,xs)       : s = s + "{},".format(x) + xs.__str__()[1:]
+            # case Thunk(_)         : pass 
         return s
     __repr__ = __str__
     def __eq__(self, value: object) -> bool:
@@ -60,5 +54,8 @@ def runthunk(list):
     match list:
         case Thunk(xs) :
             list = xs()
-        case Cons(x,Thunk(xs)):
+            runthunk(list)
+        case Cons(_,Thunk(xs)):
             list.tail = xs()
+            runthunk(list)
+        # case _ :pass

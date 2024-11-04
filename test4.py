@@ -4,14 +4,17 @@ from datalist import *
 
 tt = Cons(0,Thunk(lambda : Thunk(lambda : Cons(1,Cons(2,Empty())))))
 
-print(tt.tail.__class__)
+# print(tt.tail.__class__)
+print(tt.__str__())
+# print(tt.tail.__class__)
 print(tt)
+# print(tt.tail.__class__)
+# print(tt)
+
+
 
 # runthunk(tt)
-tt.__str__()
-
-print(tt.tail.__class__)
-print(tt)
+# tt.__str__()
 
 
 def nums(n):

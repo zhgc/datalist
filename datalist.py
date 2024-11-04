@@ -45,6 +45,8 @@ def take(n:int,list) -> List:
         case (n,Cons(x,xs)) :return Cons(x,take(n-1,xs)) 
 
 def bo(xs:List,ys:List) -> List:
+    runthunk(xs)
+    runthunk(ys)
     match (xs,ys):
         case (Empty(),ys)        : return ys
         case (xs,Empty())        : return xs
@@ -52,17 +54,21 @@ def bo(xs:List,ys:List) -> List:
         case (Cons(x,xs),ys)     : return Cons(x,bo(xs,ys))
 
 def concat(xss:List[List[T]]) -> List[T]:
+    runthunk(xss)
     match xss:
         case Empty()      : return Empty()
         case Cons(xs,xss) : return bo(xs,concat(xss))
 
 def reverse(xs:List) -> List:
+    runthunk(xs)
     return foldl(lambda xs,x:Cons(x,xs),Empty(),xs)
 
 def map(f,xs:List) -> List:
+    runthunk(xs)
     return foldr(lambda x,xs: Cons(f(x),xs),Empty(),xs)
 
 def filter(f,xs:List) -> List:
+    runthunk(xs)
     return foldr(lambda x,xs: Cons(x,xs) if f(x) else xs,Empty(),xs)
 
 # 还应该写一个从List还原到list的函数。
